@@ -11,14 +11,17 @@
     :root {
       --bg-deep: #060b18;
       --glass: rgba(15, 23, 42, 0.6);
-      --glass-strong: rgba(15, 23, 42, 0.9);
-      --glass-border: rgba(148, 163, 184, 0.2);
+      --glass-strong: rgba(15, 23, 42, 0.95);
+      --glass-border: rgba(148, 163, 184, 0.3);
       --emerald: #10b981;
       --emerald-bright: #34d399;
       --emerald-glow: rgba(16, 185, 129, 0.4);
+      --gold: #fbbf24;
+      --silver: #94a3b8;
+      --bronze: #b45309;
       --text-main: #ffffff;
-      --text-read: #e2e8f0; /* Warna teks yang lebih terang agar mudah dibaca */
-      --text-muted: #94a3b8;
+      --text-read: #ffffff;
+      --text-muted: #cbd5e1;
       --danger: #f43f5e;
       --radius-lg: 24px;
       --radius-md: 16px;
@@ -35,47 +38,74 @@
     .ambient::after { width: 400px; height: 400px; background: radial-gradient(circle, #22d3ee, transparent 70%); bottom: -100px; right: -100px; }
 
     /* Layout Screen */
-    .screen { display: none; position: relative; z-index: 10; min-height: 100vh; padding: 24px; animation: fadeIn 0.4s ease; flex-direction: column; align-items: center; justify-content: center; }
+    .screen { display: none; position: relative; z-index: 10; min-height: 100vh; padding: 30px 20px; animation: fadeIn 0.4s ease; flex-direction: column; align-items: center; justify-content: center; }
     .screen.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Kartu Kaca */
     .glass-card { width: 100%; max-width: 480px; background: var(--glass-strong); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
     
+    /* ===== LEADERBOARD STYLES (UPDATE DENGAN GAMBAR) ===== */
+    .leaderboard-card { padding: 24px; margin-bottom: 20px; }
+    .leaderboard-card h3 { font-size: 1.1rem; text-align: center; margin-bottom: 20px; color: var(--emerald-bright); display: flex; align-items: center; justify-content: center; gap: 8px; }
+    
+    .lb-list { display: flex; flex-direction: column; gap: 16px; }
+    .lb-item { display: flex; align-items: center; gap: 12px; }
+    
+    .lb-rank { font-size: 1.2rem; width: 24px; text-align: center; font-weight: bold; flex-shrink: 0; }
+    .lb-item:nth-child(1) .lb-rank { color: var(--gold); font-size: 1.4rem; }
+    .lb-item:nth-child(2) .lb-rank { color: var(--silver); font-size: 1.3rem; }
+    .lb-item:nth-child(3) .lb-rank { color: var(--bronze); font-size: 1.2rem; }
+
+    /* Gambar Jersey di Leaderboard */
+    .lb-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--glass-border); background: #0f172a; flex-shrink: 0; }
+    
+    .lb-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+    .lb-name { font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lb-votes { font-size: 0.75rem; font-weight: 700; color: var(--emerald-bright); background: rgba(16,185,129,0.15); padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+    
+    .lb-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+    .lb-bar-fill { height: 100%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 10px; transition: width 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    
+    .lb-item:nth-child(1) .lb-bar-fill { background: linear-gradient(90deg, #fbbf24, #fcd34d); }
+    .lb-item:nth-child(2) .lb-bar-fill { background: linear-gradient(90deg, #94a3b8, #cbd5e1); }
+    .lb-item:nth-child(3) .lb-bar-fill { background: linear-gradient(90deg, #b45309, #d97706); }
+
     /* Ikon & Typography */
     .icon-wrap { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--emerald-bright); }
     .icon-warning { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.4); color: #fcd34d; }
     
     h2 { font-size: 1.5rem; text-align: center; margin-bottom: 8px; color: var(--text-main); }
-    p.subtitle { text-align: center; color: var(--text-read); font-size: 0.95rem; margin-bottom: 24px; }
+    p.subtitle { text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
 
-    /* Teks Pemberitahuan yang Diperjelas */
-    .rules-list { list-style: none; margin-bottom: 24px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
-    .rules-list li { display: flex; gap: 12px; font-size: 0.95rem; color: var(--text-read); margin-bottom: 14px; line-height: 1.5; }
+    /* Teks Pemberitahuan */
+    .rules-list { list-style: none; margin-bottom: 24px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
+    .rules-list li { display: flex; gap: 12px; font-size: 1.05rem; color: var(--text-read); margin-bottom: 16px; line-height: 1.5; font-weight: 500; }
     .rules-list li:last-child { margin-bottom: 0; }
-    .rules-list i { color: var(--emerald-bright); margin-top: 4px; font-size: 1.1rem; }
-    .rules-list strong { color: #ffffff; font-weight: 700; }
+    .rules-list i { color: var(--emerald-bright); margin-top: 4px; font-size: 1.2rem; }
+    .rules-list strong { color: #ffffff; font-weight: 800; text-decoration: underline; }
 
     /* Form Input */
     .form-group { margin-bottom: 20px; }
-    label { display: block; font-size: 0.9rem; color: var(--text-read); margin-bottom: 8px; font-weight: 600; }
-    input[type="text"], input[type="password"], select { width: 100%; padding: 15px 16px; background: rgba(2,6,23,0.8); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 1rem; outline: none; transition: 0.3s; }
+    label { display: block; font-size: 0.95rem; color: var(--text-main); margin-bottom: 8px; font-weight: 600; }
+    input[type="text"], input[type="password"], select { width: 100%; padding: 16px; background: rgba(2,6,23,0.8); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 1rem; outline: none; transition: 0.3s; }
     input:focus, select:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
     select option { background: #0f172a; color: white; }
 
     /* Checkbox */
-    .checkbox-container { display: flex; align-items: flex-start; gap: 14px; cursor: pointer; margin-bottom: 24px; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); transition: 0.3s; }
-    .checkbox-container:hover { background: rgba(255,255,255,0.08); }
+    .checkbox-container { display: flex; align-items: flex-start; gap: 14px; cursor: pointer; margin-bottom: 24px; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); transition: 0.3s; }
+    .checkbox-container:hover { background: rgba(255,255,255,0.12); }
     .checkbox-container input { display: none; }
-    .checkmark { width: 24px; height: 24px; border: 2px solid var(--text-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.2s; margin-top: 2px; }
+    .checkmark { width: 26px; height: 26px; border: 2px solid var(--text-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.2s; margin-top: 2px; }
     .checkmark i { color: white; font-size: 0.9rem; transform: scale(0); transition: 0.2s; }
     .checkbox-container input:checked + .checkmark { background: var(--emerald); border-color: var(--emerald); }
     .checkbox-container input:checked + .checkmark i { transform: scale(1); }
-    .checkbox-text { font-size: 0.9rem; color: var(--text-read); line-height: 1.5; }
-    .checkbox-text strong { color: white; }
+    .checkbox-text { font-size: 0.95rem; color: var(--text-read); line-height: 1.5; }
+    .checkbox-text strong { color: #ffffff; font-weight: 800; }
 
     /* Tombol */
-    .btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+    .btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius-sm); font-size: 1.05rem; font-weight: 800; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
     .btn-primary { background: linear-gradient(135deg, var(--emerald), #059669); color: #022c1a; box-shadow: 0 4px 20px -4px var(--emerald-glow); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -4px var(--emerald-glow); }
     .btn-primary:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; transform: none; box-shadow: none; opacity: 0.7; }
@@ -86,14 +116,14 @@
     .eye-btn:hover { color: var(--emerald-bright); }
 
     /* Grid Jersey */
-    .jersey-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; width: 100%; max-width: 1000px; margin: 0 auto 120px; }
+    .jersey-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; width: 100%; max-width: 1000px; margin: 0 auto 120px; }
     .jersey-card { position: relative; background: var(--glass); border: 2px solid var(--glass-border); border-radius: var(--radius-md); overflow: hidden; cursor: pointer; transition: 0.3s; user-select: none; }
     .jersey-card:hover { border-color: var(--text-muted); transform: translateY(-4px); }
     .jersey-card.selected { border-color: var(--emerald); box-shadow: 0 0 0 3px var(--emerald-glow); transform: translateY(-4px); }
     
     .jersey-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #0f172a; }
-    .jersey-info { padding: 14px; text-align: center; background: rgba(0,0,0,0.4); }
-    .jersey-title { font-size: 0.95rem; font-weight: 700; color: #ffffff; } /* Teks putih tebal */
+    .jersey-info { padding: 12px; text-align: center; background: rgba(0,0,0,0.5); }
+    .jersey-title { font-size: 0.95rem; font-weight: 800; color: #ffffff; }
     
     .badge-check { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: var(--emerald); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; transform: scale(0); transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
     .jersey-card.selected .badge-check { transform: scale(1); }
@@ -101,7 +131,7 @@
     /* Header Voting */
     .voting-header { width: 100%; max-width: 1000px; text-align: center; margin-bottom: 30px; padding-top: 20px; }
     .voting-header h1 { font-size: 1.8rem; background: linear-gradient(to right, #ffffff, var(--emerald-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
-    .voting-header .user-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16,185,129,0.15); border: 1px solid var(--emerald); color: var(--emerald-bright); padding: 8px 18px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; }
+    .voting-header .user-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16,185,129,0.2); border: 1px solid var(--emerald); color: var(--emerald-bright); padding: 8px 18px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; }
 
     /* Floating Submit Button */
     .submit-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 20px 24px; background: rgba(6, 11, 24, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--glass-border); z-index: 100; display: flex; justify-content: center; transform: translateY(100%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2); }
@@ -113,10 +143,10 @@
     .overlay.active { display: flex; }
     .spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--emerald); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .overlay h3 { color: white; }
+    .overlay h3 { color: white; font-size: 1.3rem; }
 
     /* Toast */
-    .toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--danger); color: white; padding: 14px 24px; border-radius: 100px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 10px 30px rgba(244,63,94,0.5); z-index: 3000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3); display: flex; align-items: center; gap: 10px; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--danger); color: white; padding: 14px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; box-shadow: 0 10px 30px rgba(244,63,94,0.5); z-index: 3000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3); display: flex; align-items: center; gap: 10px; }
     .toast.show { transform: translate(-50%, 0); }
 
     @media (max-width: 600px) {
@@ -124,7 +154,9 @@
       .jersey-title { font-size: 0.85rem; }
       .glass-card { padding: 24px 20px; }
       .voting-header h1 { font-size: 1.5rem; }
-      .rules-list li { font-size: 0.9rem; }
+      .rules-list li { font-size: 0.95rem; }
+      .lb-header { font-size: 0.8rem; }
+      .lb-img { width: 42px; height: 42px; }
     }
   </style>
 </head>
@@ -132,8 +164,20 @@
 
   <div class="ambient"></div>
 
-  <!-- ================= TAHAP 1: PASSWORD ================= -->
+  <!-- ================= TAHAP 1: PASSWORD & LEADERBOARD ================= -->
   <div class="screen active" id="screen-password">
+    
+    <!-- 🏆 LEADERBOARD TOP 5 -->
+    <div class="glass-card leaderboard-card">
+      <h3><i class="fa-solid fa-trophy"></i> Top 5 Jersey Terpopuler</h3>
+      <div class="lb-list" id="leaderboard-list">
+        <p style="text-align:center; font-size:0.85rem; color:var(--text-muted);">
+          <i class="fa-solid fa-spinner fa-spin"></i> Memuat data...
+        </p>
+      </div>
+    </div>
+
+    <!-- FORM PASSWORD -->
     <div class="glass-card">
       <div class="icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
       <h2>Akses Terbatas</h2>
@@ -246,20 +290,25 @@
       "WINDA SYAFINA JASMINE"
     ];
 
-    // ⚠️ PERBAIKAN GAMBAR: Menghapus "jersey/" karena gambar ada di folder utama Github
+    // GAMBAR (Absolute URL GitHub Raw)
+    const GITHUB_USER = "xdfaaateam-tech";
+    const GITHUB_REPO = "Jersey-";
+    const GITHUB_BRANCH = "main";
+    const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
+
     const JERSEYS = [
-      { id: "j01", name: "Jersey Opsi 01", img: "IMG-20260717-WA0016.jpg" },
-      { id: "j02", name: "Jersey Opsi 02", img: "IMG-20260717-WA0034.jpg" },
-      { id: "j03", name: "Jersey Opsi 03", img: "IMG-20260926-WA0121.jpg" },
-      { id: "j04", name: "Jersey Opsi 04", img: "IMG-20260926-WA0122.jpg" },
-      { id: "j05", name: "Jersey Opsi 05", img: "IMG-20261013-WA0000.jpg" },
-      { id: "j06", name: "Jersey Opsi 06", img: "IMG-20261013-WA0001.jpg" },
-      { id: "j07", name: "Jersey Opsi 07", img: "IMG-20261013-WA0002.jpg" },
-      { id: "j08", name: "Jersey Opsi 08", img: "IMG-20261013-WA0003.jpg" },
-      { id: "j09", name: "Jersey Opsi 09", img: "IMG-20261013-WA0019.jpg" },
-      { id: "j10", name: "Jersey Opsi 10", img: "IMG-20261013-WA0020.jpg" },
-      { id: "j11", name: "Jersey Opsi 11", img: "IMG-20261013-WA0021.jpg" },
-      { id: "j12", name: "Jersey Opsi 12", img: "IMG-20261013-WA0023.jpg" }
+      { id: "j01", name: "Jersey Opsi 01", img: BASE_URL + "IMG-20260717-WA0016.jpg" },
+      { id: "j02", name: "Jersey Opsi 02", img: BASE_URL + "IMG-20260717-WA0034.jpg" },
+      { id: "j03", name: "Jersey Opsi 03", img: BASE_URL + "IMG-20260926-WA0121.jpg" },
+      { id: "j04", name: "Jersey Opsi 04", img: BASE_URL + "IMG-20260926-WA0122.jpg" },
+      { id: "j05", name: "Jersey Opsi 05", img: BASE_URL + "IMG-20261013-WA0000.jpg" },
+      { id: "j06", name: "Jersey Opsi 06", img: BASE_URL + "IMG-20261013-WA0001.jpg" },
+      { id: "j07", name: "Jersey Opsi 07", img: BASE_URL + "IMG-20261013-WA0002.jpg" },
+      { id: "j08", name: "Jersey Opsi 08", img: BASE_URL + "IMG-20261013-WA0003.jpg" },
+      { id: "j09", name: "Jersey Opsi 09", img: BASE_URL + "IMG-20261013-WA0019.jpg" },
+      { id: "j10", name: "Jersey Opsi 10", img: BASE_URL + "IMG-20261013-WA0020.jpg" },
+      { id: "j11", name: "Jersey Opsi 11", img: BASE_URL + "IMG-20261013-WA0021.jpg" },
+      { id: "j12", name: "Jersey Opsi 12", img: BASE_URL + "IMG-20261013-WA0023.jpg" }
     ];
 
     let selectedJerseyId = null;
@@ -275,7 +324,87 @@
       window.scrollTo(0, 0);
     }
 
-    // TAHAP 1: PASSWORD
+    // ================= FITUR LEADERBOARD (TOP 5) =================
+    async function loadLeaderboard() {
+      const listEl = $("#leaderboard-list");
+      try {
+        const res = await fetch(API_URL);
+        const json = await res.json();
+        
+        if (json.status !== "success") throw new Error("Gagal memuat data");
+
+        const data = json.data; // Array of rows
+        const voteCounts = {};
+        
+        // Inisialisasi semua jersey dengan 0 vote
+        JERSEYS.forEach(j => voteCounts[j.name] = 0);
+
+        // Hitung suara (lewati baris pertama/header)
+        if (data && data.length > 1) {
+          const rows = data.slice(1);
+          rows.forEach(row => {
+            const chosenJersey = row[2]; // Kolom ke-3 adalah nama jersey
+            if (voteCounts[chosenJersey] !== undefined) {
+              voteCounts[chosenJersey]++;
+            }
+          });
+        }
+
+        // Urutkan dari yang terbanyak, ambil 5 teratas, filter yang > 0
+        const sorted = Object.entries(voteCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5)
+          .filter(item => item[1] > 0); // Hanya tampilkan jika ada suara
+
+        if (sorted.length === 0) {
+          listEl.innerHTML = '<p style="text-align:center; font-size:0.85rem; color:var(--text-muted);">Belum ada suara yang masuk.</p>';
+          return;
+        }
+
+        const maxVotes = sorted[0][1]; // Untuk menghitung persentase panjang bar
+
+        listEl.innerHTML = sorted.map((item, index) => {
+          const [name, votes] = item;
+          const percent = (votes / maxVotes) * 100;
+          
+          // Ambil URL gambar dari data JERSEYS berdasarkan nama
+          const jerseyObj = JERSEYS.find(j => j.name === name);
+          const imgUrl = jerseyObj ? jerseyObj.img : 'https://placehold.co/100x100/1e293b/ffffff?text=?';
+
+          // Tentukan Ikon Peringkat
+          let rankIcon = `<span>#${index + 1}</span>`;
+          if (index === 0) rankIcon = "🥇";
+          else if (index === 1) rankIcon = "🥈";
+          else if (index === 2) rankIcon = "🥉";
+
+          return `
+            <div class="lb-item">
+              <span class="lb-rank">${rankIcon}</span>
+              <img src="${imgUrl}" class="lb-img" alt="${name}">
+              <div class="lb-content">
+                <div class="lb-header">
+                  <span class="lb-name">${name}</span>
+                  <span class="lb-votes">${votes} Suara</span>
+                </div>
+                <div class="lb-bar-bg">
+                  <div class="lb-bar-fill" style="width: ${percent}%"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+      } catch (err) {
+        listEl.innerHTML = '<p style="text-align:center; font-size:0.85rem; color:var(--danger);">Gagal memuat peringkat.</p>';
+        console.error(err);
+      }
+    }
+
+    // Panggil fungsi leaderboard saat halaman dimuat
+    document.addEventListener("DOMContentLoaded", loadLeaderboard);
+
+
+    // ================= TAHAP 1: PASSWORD =================
     const passInput = $("#pass-input");
     $("#eye-btn").addEventListener("click", () => {
       const isHidden = passInput.type === "password";
@@ -294,10 +423,10 @@
     });
     passInput.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#btn-login").click(); });
 
-    // TAHAP 2: RULES
+    // ================= TAHAP 2: RULES =================
     $("#btn-understand").addEventListener("click", () => showScreen("identity"));
 
-    // TAHAP 3: IDENTITY
+    // ================= TAHAP 3: IDENTITY =================
     const nameSelect = $("#name-select");
     STUDENT_NAMES.forEach(name => {
       const opt = document.createElement("option");
@@ -322,7 +451,7 @@
       renderJerseys();
     });
 
-    // TAHAP 4: VOTING
+    // ================= TAHAP 4: VOTING =================
     const grid = $("#jersey-grid");
     const btnSubmit = $("#btn-submit");
     const submitBar = $("#submit-bar");
@@ -335,7 +464,7 @@
         card.dataset.id = jersey.id;
         
         card.innerHTML = `
-          <img src="${jersey.img}" alt="${jersey.name}" class="jersey-img" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Gambar+Error'">
+          <img src="${jersey.img}" alt="${jersey.name}" class="jersey-img" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Gagal+Dimuat'">
           <div class="jersey-info">
             <span class="jersey-title">${jersey.name}</span>
           </div>
