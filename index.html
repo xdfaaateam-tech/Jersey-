@@ -6,17 +6,18 @@
   <title>Voting Jersey XI.C.2 — Official</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
   <style>
     :root {
       --bg-deep: #060b18;
-      --glass: rgba(15, 23, 42, 0.55);
-      --glass-strong: rgba(15, 23, 42, 0.85);
-      --glass-border: rgba(148, 163, 184, 0.15);
+      --glass: rgba(15, 23, 42, 0.6);
+      --glass-strong: rgba(15, 23, 42, 0.9);
+      --glass-border: rgba(148, 163, 184, 0.2);
       --emerald: #10b981;
       --emerald-bright: #34d399;
-      --emerald-glow: rgba(16, 185, 129, 0.35);
-      --cyan: #22d3ee;
-      --text: #f1f5f9;
+      --emerald-glow: rgba(16, 185, 129, 0.4);
+      --text-main: #ffffff;
+      --text-read: #e2e8f0; /* Warna teks yang lebih terang agar mudah dibaca */
       --text-muted: #94a3b8;
       --danger: #f43f5e;
       --radius-lg: 24px;
@@ -25,15 +26,15 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text); min-height: 100vh; overflow-x: hidden; line-height: 1.5; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-main); min-height: 100vh; overflow-x: hidden; line-height: 1.6; }
 
     /* Background Ambient */
     .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .ambient::before, .ambient::after { content: ''; position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.25; }
+    .ambient::before, .ambient::after { content: ''; position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.2; }
     .ambient::before { width: 500px; height: 500px; background: radial-gradient(circle, #10b981, transparent 70%); top: -150px; left: -100px; }
     .ambient::after { width: 400px; height: 400px; background: radial-gradient(circle, #22d3ee, transparent 70%); bottom: -100px; right: -100px; }
 
-    /* Layout Screen (Tahapan) */
+    /* Layout Screen */
     .screen { display: none; position: relative; z-index: 10; min-height: 100vh; padding: 24px; animation: fadeIn 0.4s ease; flex-direction: column; align-items: center; justify-content: center; }
     .screen.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -42,78 +43,88 @@
     .glass-card { width: 100%; max-width: 480px; background: var(--glass-strong); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
     
     /* Ikon & Typography */
-    .icon-wrap { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--emerald-bright); }
-    .icon-warning { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #fcd34d; }
-    h2 { font-size: 1.4rem; text-align: center; margin-bottom: 8px; }
-    p.subtitle { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; }
-    .rules-list { list-style: none; margin-bottom: 24px; background: rgba(0,0,0,0.2); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
-    .rules-list li { display: flex; gap: 12px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
-    .rules-list li:last-child { margin-bottom: 0; }
-    .rules-list i { color: var(--emerald); margin-top: 2px; }
+    .icon-wrap { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--emerald-bright); }
+    .icon-warning { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.4); color: #fcd34d; }
+    
+    h2 { font-size: 1.5rem; text-align: center; margin-bottom: 8px; color: var(--text-main); }
+    p.subtitle { text-align: center; color: var(--text-read); font-size: 0.95rem; margin-bottom: 24px; }
 
-    /* Input & Select */
+    /* Teks Pemberitahuan yang Diperjelas */
+    .rules-list { list-style: none; margin-bottom: 24px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
+    .rules-list li { display: flex; gap: 12px; font-size: 0.95rem; color: var(--text-read); margin-bottom: 14px; line-height: 1.5; }
+    .rules-list li:last-child { margin-bottom: 0; }
+    .rules-list i { color: var(--emerald-bright); margin-top: 4px; font-size: 1.1rem; }
+    .rules-list strong { color: #ffffff; font-weight: 700; }
+
+    /* Form Input */
     .form-group { margin-bottom: 20px; }
-    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
-    input[type="text"], input[type="password"], select { width: 100%; padding: 14px 16px; background: rgba(2,6,23,0.6); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 0.95rem; outline: none; transition: 0.3s; }
-    input:focus, select:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
+    label { display: block; font-size: 0.9rem; color: var(--text-read); margin-bottom: 8px; font-weight: 600; }
+    input[type="text"], input[type="password"], select { width: 100%; padding: 15px 16px; background: rgba(2,6,23,0.8); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: white; font-size: 1rem; outline: none; transition: 0.3s; }
+    input:focus, select:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
     select option { background: #0f172a; color: white; }
 
-    /* Checkbox Custom */
-    .checkbox-container { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin-bottom: 24px; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); transition: 0.3s; }
-    .checkbox-container:hover { background: rgba(255,255,255,0.06); }
+    /* Checkbox */
+    .checkbox-container { display: flex; align-items: flex-start; gap: 14px; cursor: pointer; margin-bottom: 24px; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); transition: 0.3s; }
+    .checkbox-container:hover { background: rgba(255,255,255,0.08); }
     .checkbox-container input { display: none; }
-    .checkmark { width: 22px; height: 22px; border: 2px solid var(--text-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.2s; margin-top: 2px; }
-    .checkmark i { color: white; font-size: 0.8rem; transform: scale(0); transition: 0.2s; }
+    .checkmark { width: 24px; height: 24px; border: 2px solid var(--text-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.2s; margin-top: 2px; }
+    .checkmark i { color: white; font-size: 0.9rem; transform: scale(0); transition: 0.2s; }
     .checkbox-container input:checked + .checkmark { background: var(--emerald); border-color: var(--emerald); }
     .checkbox-container input:checked + .checkmark i { transform: scale(1); }
-    .checkbox-text { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
+    .checkbox-text { font-size: 0.9rem; color: var(--text-read); line-height: 1.5; }
+    .checkbox-text strong { color: white; }
 
     /* Tombol */
-    .btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+    .btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius-sm); font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
     .btn-primary { background: linear-gradient(135deg, var(--emerald), #059669); color: #022c1a; box-shadow: 0 4px 20px -4px var(--emerald-glow); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -4px var(--emerald-glow); }
-    .btn-primary:disabled { background: #1e293b; color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; opacity: 0.5; }
+    .btn-primary:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; transform: none; box-shadow: none; opacity: 0.7; }
 
-    /* Tombol Password Eye */
+    /* Password Eye */
     .input-wrapper { position: relative; }
-    .eye-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 8px; }
+    .eye-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; padding: 8px; }
+    .eye-btn:hover { color: var(--emerald-bright); }
 
     /* Grid Jersey */
-    .jersey-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; width: 100%; max-width: 1000px; margin: 0 auto 100px; }
+    .jersey-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; width: 100%; max-width: 1000px; margin: 0 auto 120px; }
     .jersey-card { position: relative; background: var(--glass); border: 2px solid var(--glass-border); border-radius: var(--radius-md); overflow: hidden; cursor: pointer; transition: 0.3s; user-select: none; }
-    .jersey-card:hover { border-color: var(--glass-border); transform: translateY(-4px); }
-    .jersey-card.selected { border-color: var(--emerald); box-shadow: 0 0 0 2px var(--emerald), 0 10px 30px -10px var(--emerald-glow); transform: translateY(-4px); }
-    .jersey-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #000; }
-    .jersey-info { padding: 12px; text-align: center; }
-    .jersey-title { font-size: 0.9rem; font-weight: 600; }
-    .badge-check { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; background: var(--emerald); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transform: scale(0); transition: 0.3s; }
+    .jersey-card:hover { border-color: var(--text-muted); transform: translateY(-4px); }
+    .jersey-card.selected { border-color: var(--emerald); box-shadow: 0 0 0 3px var(--emerald-glow); transform: translateY(-4px); }
+    
+    .jersey-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #0f172a; }
+    .jersey-info { padding: 14px; text-align: center; background: rgba(0,0,0,0.4); }
+    .jersey-title { font-size: 0.95rem; font-weight: 700; color: #ffffff; } /* Teks putih tebal */
+    
+    .badge-check { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: var(--emerald); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; transform: scale(0); transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
     .jersey-card.selected .badge-check { transform: scale(1); }
 
     /* Header Voting */
-    .voting-header { width: 100%; max-width: 1000px; text-align: center; margin-bottom: 24px; padding: 24px 0; }
-    .voting-header h1 { font-size: 1.8rem; background: linear-gradient(to right, #fff, var(--emerald-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
-    .voting-header .user-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--emerald-bright); padding: 6px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; }
+    .voting-header { width: 100%; max-width: 1000px; text-align: center; margin-bottom: 30px; padding-top: 20px; }
+    .voting-header h1 { font-size: 1.8rem; background: linear-gradient(to right, #ffffff, var(--emerald-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+    .voting-header .user-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16,185,129,0.15); border: 1px solid var(--emerald); color: var(--emerald-bright); padding: 8px 18px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; }
 
     /* Floating Submit Button */
-    .submit-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 16px 24px; background: var(--bg-deep); border-top: 1px solid var(--glass-border); z-index: 100; display: flex; justify-content: center; transform: translateY(100%); transition: 0.3s; }
+    .submit-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 20px 24px; background: rgba(6, 11, 24, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--glass-border); z-index: 100; display: flex; justify-content: center; transform: translateY(100%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2); }
     .submit-bar.show { transform: translateY(0); }
     .submit-bar .btn { max-width: 600px; }
 
     /* Overlays */
-    .overlay { position: fixed; inset: 0; background: rgba(6,11,24,0.9); backdrop-filter: blur(10px); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+    .overlay { position: fixed; inset: 0; background: rgba(6,11,24,0.95); backdrop-filter: blur(10px); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
     .overlay.active { display: flex; }
     .spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--emerald); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .overlay h3 { color: white; }
 
     /* Toast */
-    .toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--danger); color: white; padding: 12px 24px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 10px 30px rgba(244,63,94,0.4); z-index: 3000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3); display: flex; align-items: center; gap: 8px; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--danger); color: white; padding: 14px 24px; border-radius: 100px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 10px 30px rgba(244,63,94,0.5); z-index: 3000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3); display: flex; align-items: center; gap: 10px; }
     .toast.show { transform: translate(-50%, 0); }
 
     @media (max-width: 600px) {
       .jersey-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .jersey-title { font-size: 0.75rem; }
+      .jersey-title { font-size: 0.85rem; }
       .glass-card { padding: 24px 20px; }
-      .voting-header h1 { font-size: 1.4rem; }
+      .voting-header h1 { font-size: 1.5rem; }
+      .rules-list li { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -147,10 +158,10 @@
       <p class="subtitle">Harap baca dengan teliti sebelum melanjutkan</p>
       
       <ul class="rules-list">
-        <li><i class="fa-solid fa-circle-check"></i> Pemilihan ini hanya boleh dilakukan <strong>SATU KALI</strong> untuk setiap nama.</li>
-        <li><i class="fa-solid fa-circle-check"></i> Anda <strong>HANYA BOLEH MEMILIH SATU (1) JERSEY</strong> saja.</li>
-        <li><i class="fa-solid fa-circle-check"></i> <strong>TIDAK ADA KESEMPATAN KEDUA</strong> untuk mengubah pilihan. Pikirkanlah secara matang!</li>
-        <li><i class="fa-solid fa-circle-check"></i> Suara yang sudah masuk tidak dapat dibatalkan atau diubah.</li>
+        <li><i class="fa-solid fa-circle-check"></i> <span>Pemilihan ini hanya boleh dilakukan <strong>SATU KALI</strong> untuk setiap nama.</span></li>
+        <li><i class="fa-solid fa-circle-check"></i> <span>Anda <strong>HANYA BOLEH MEMILIH SATU (1) JERSEY</strong> saja.</span></li>
+        <li><i class="fa-solid fa-circle-check"></i> <span><strong>TIDAK ADA KESEMPATAN KEDUA</strong> untuk mengubah pilihan. Pikirkanlah secara matang!</span></li>
+        <li><i class="fa-solid fa-circle-check"></i> <span>Suara yang sudah masuk tidak dapat dibatalkan atau diubah.</span></li>
       </ul>
       
       <button class="btn btn-primary" id="btn-understand">Saya Mengerti <i class="fa-solid fa-check"></i></button>
@@ -168,11 +179,10 @@
         <label for="name-select">Daftar Nama Siswa XI.C.2</label>
         <select id="name-select">
           <option value="" disabled selected>-- Pilih Nama Anda --</option>
-          <!-- Opsi akan diisi oleh JavaScript -->
+          <!-- Opsi diisi JS -->
         </select>
       </div>
 
-      <!-- Checkbox Persetujuan -->
       <label class="checkbox-container">
         <input type="checkbox" id="confirm-check">
         <div class="checkmark"><i class="fa-solid fa-check"></i></div>
@@ -191,13 +201,12 @@
     </div>
 
     <div class="jersey-grid" id="jersey-grid">
-      <!-- Jersey akan di-render oleh JavaScript -->
+      <!-- Jersey di-render JS -->
     </div>
 
-    <!-- Floating Button untuk Submit (Memudahkan di HP) -->
     <div class="submit-bar" id="submit-bar">
       <button class="btn btn-primary" id="btn-submit" disabled>
-        <i class="fa-solid fa-paper-plane"></i> Kunci & Kirim Vote
+        <i class="fa-solid fa-lock"></i> Kunci & Kirim Vote
       </button>
     </div>
   </div>
@@ -209,19 +218,18 @@
   </div>
 
   <div class="overlay" id="success-overlay">
-    <div class="icon-wrap" style="width:80px;height:80px;font-size:2rem;"><i class="fa-solid fa-check"></i></div>
-    <h2 style="margin-top:20px;">Vote Berhasil!</h2>
-    <p class="subtitle">Terima kasih, suara Anda sudah tercatat dan tidak dapat diubah lagi.</p>
+    <div class="icon-wrap" style="width:80px;height:80px;font-size:2.5rem;background:rgba(16,185,129,0.2);"><i class="fa-solid fa-check"></i></div>
+    <h2 style="margin-top:20px; font-size:1.8rem;">Vote Berhasil!</h2>
+    <p class="subtitle" style="color:white; font-size:1rem;">Terima kasih, suara Anda sudah tercatat dan tidak dapat diubah lagi.</p>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"><i class="fa-solid fa-circle-exclamation"></i> <span id="toast-msg"></span></div>
 
   <script>
-    // ================= KONFIGURASI =================
+    // KONFIGURASI API
     const API_URL = "https://script.google.com/macros/s/AKfycbwIfFzDkBAQA75LN1EF3S7kAPH6IEHuSQXHgcMGaeXHazgJ3hCp2RG5jHCe34znYeeAig/exec";
     
-    // Daftar Nama Siswa
+    // DAFTAR NAMA SISWA
     const STUDENT_NAMES = [
       "ABIYYU TSAQIB", "ACHMAD RIBERY ALHAKIM", "AFIFA ZIAULIMA AZMI", "AIRA PURNAMA SYACHPUTRI", 
       "ALFIAN NENDIE DJUANTORO", "ALISA AZ ZIKRA", "ALMAIRA DAMAI YANTI", "ALMIRA DINEFI APRILIANI", 
@@ -238,27 +246,25 @@
       "WINDA SYAFINA JASMINE"
     ];
 
-    // Daftar Jersey
+    // ⚠️ PERBAIKAN GAMBAR: Menghapus "jersey/" karena gambar ada di folder utama Github
     const JERSEYS = [
-      { id: "j01", name: "Jersey Opsi 01", img: "jersey/IMG-20260717-WA0016.jpg" },
-      { id: "j02", name: "Jersey Opsi 02", img: "jersey/IMG-20260717-WA0034.jpg" },
-      { id: "j03", name: "Jersey Opsi 03", img: "jersey/IMG-20260926-WA0121.jpg" },
-      { id: "j04", name: "Jersey Opsi 04", img: "jersey/IMG-20260926-WA0122.jpg" },
-      { id: "j05", name: "Jersey Opsi 05", img: "jersey/IMG-20261013-WA0000.jpg" },
-      { id: "j06", name: "Jersey Opsi 06", img: "jersey/IMG-20261013-WA0001.jpg" },
-      { id: "j07", name: "Jersey Opsi 07", img: "jersey/IMG-20261013-WA0002.jpg" },
-      { id: "j08", name: "Jersey Opsi 08", img: "jersey/IMG-20261013-WA0003.jpg" },
-      { id: "j09", name: "Jersey Opsi 09", img: "jersey/IMG-20261013-WA0019.jpg" },
-      { id: "j10", name: "Jersey Opsi 10", img: "jersey/IMG-20261013-WA0020.jpg" },
-      { id: "j11", name: "Jersey Opsi 11", img: "jersey/IMG-20261013-WA0021.jpg" },
-      { id: "j12", name: "Jersey Opsi 12", img: "jersey/IMG-20261013-WA0023.jpg" }
+      { id: "j01", name: "Jersey Opsi 01", img: "IMG-20260717-WA0016.jpg" },
+      { id: "j02", name: "Jersey Opsi 02", img: "IMG-20260717-WA0034.jpg" },
+      { id: "j03", name: "Jersey Opsi 03", img: "IMG-20260926-WA0121.jpg" },
+      { id: "j04", name: "Jersey Opsi 04", img: "IMG-20260926-WA0122.jpg" },
+      { id: "j05", name: "Jersey Opsi 05", img: "IMG-20261013-WA0000.jpg" },
+      { id: "j06", name: "Jersey Opsi 06", img: "IMG-20261013-WA0001.jpg" },
+      { id: "j07", name: "Jersey Opsi 07", img: "IMG-20261013-WA0002.jpg" },
+      { id: "j08", name: "Jersey Opsi 08", img: "IMG-20261013-WA0003.jpg" },
+      { id: "j09", name: "Jersey Opsi 09", img: "IMG-20261013-WA0019.jpg" },
+      { id: "j10", name: "Jersey Opsi 10", img: "IMG-20261013-WA0020.jpg" },
+      { id: "j11", name: "Jersey Opsi 11", img: "IMG-20261013-WA0021.jpg" },
+      { id: "j12", name: "Jersey Opsi 12", img: "IMG-20261013-WA0023.jpg" }
     ];
 
-    // State
     let selectedJerseyId = null;
     let selectedVoterName = "";
 
-    // ================= DOM ELEMENTS =================
     const $ = (s) => document.querySelector(s);
     const $$ = (s) => document.querySelectorAll(s);
     const screens = { pass: $("#screen-password"), rules: $("#screen-rules"), identity: $("#screen-identity"), voting: $("#screen-voting") };
@@ -269,16 +275,12 @@
       window.scrollTo(0, 0);
     }
 
-    // ================= TAHAP 1: PASSWORD =================
+    // TAHAP 1: PASSWORD
     const passInput = $("#pass-input");
-    const eyeBtn = $("#eye-btn");
-    const eyeIcon = $("#eye-icon");
-
-    eyeBtn.addEventListener("click", () => {
+    $("#eye-btn").addEventListener("click", () => {
       const isHidden = passInput.type === "password";
       passInput.type = isHidden ? "text" : "password";
-      eyeIcon.classList.toggle("fa-eye", !isHidden);
-      eyeIcon.classList.toggle("fa-eye-slash", isHidden);
+      $("#eye-icon").className = isHidden ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
     });
 
     $("#btn-login").addEventListener("click", () => {
@@ -290,16 +292,12 @@
         passInput.focus();
       }
     });
-
     passInput.addEventListener("keydown", (e) => { if (e.key === "Enter") $("#btn-login").click(); });
 
-    // ================= TAHAP 2: RULES =================
-    $("#btn-understand").addEventListener("click", () => {
-      showScreen("identity");
-    });
+    // TAHAP 2: RULES
+    $("#btn-understand").addEventListener("click", () => showScreen("identity"));
 
-    // ================= TAHAP 3: IDENTITY =================
-    // Isi Dropdown
+    // TAHAP 3: IDENTITY
     const nameSelect = $("#name-select");
     STUDENT_NAMES.forEach(name => {
       const opt = document.createElement("option");
@@ -311,15 +309,9 @@
     const confirmCheck = $("#confirm-check");
     const btnContinue = $("#btn-continue");
 
-    // Validasi form identity
     function checkIdentityForm() {
-      if (nameSelect.value !== "" && confirmCheck.checked) {
-        btnContinue.disabled = false;
-      } else {
-        btnContinue.disabled = true;
-      }
+      btnContinue.disabled = !(nameSelect.value !== "" && confirmCheck.checked);
     }
-
     nameSelect.addEventListener("change", checkIdentityForm);
     confirmCheck.addEventListener("change", checkIdentityForm);
 
@@ -330,7 +322,7 @@
       renderJerseys();
     });
 
-    // ================= TAHAP 4: VOTING =================
+    // TAHAP 4: VOTING
     const grid = $("#jersey-grid");
     const btnSubmit = $("#btn-submit");
     const submitBar = $("#submit-bar");
@@ -341,10 +333,9 @@
         const card = document.createElement("div");
         card.className = "jersey-card";
         card.dataset.id = jersey.id;
-        card.style.animationDelay = `${index * 0.05}s`;
         
         card.innerHTML = `
-          <img src="${jersey.img}" alt="${jersey.name}" class="jersey-img" onerror="this.src='https://placehold.co/400x400/0f172a/64748b?text=Gambar+Jersey'">
+          <img src="${jersey.img}" alt="${jersey.name}" class="jersey-img" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Gambar+Error'">
           <div class="jersey-info">
             <span class="jersey-title">${jersey.name}</span>
           </div>
@@ -356,24 +347,16 @@
       });
     }
 
-    // Fungsi Single Selection (Hanya bisa pilih satu)
     function selectJersey(id, card) {
-      // Hapus kelas selected dari semua kartu
       $$(".jersey-card").forEach(c => c.classList.remove("selected"));
-      
-      // Tambahkan kelas selected ke kartu yang dipilih
       card.classList.add("selected");
       selectedJerseyId = id;
-      
-      // Tampilkan tombol submit dan aktifkan
       submitBar.classList.add("show");
       btnSubmit.disabled = false;
     }
 
-    // Kirim Vote
     btnSubmit.addEventListener("click", () => {
       if (!selectedJerseyId) return;
-
       const jerseyName = JERSEYS.find(j => j.id === selectedJerseyId).name;
       
       $("#loading-overlay").classList.add("active");
@@ -382,11 +365,7 @@
       fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          name: selectedVoterName,
-          jersey: jerseyName,
-          kelas: "XI.C.2"
-        })
+        body: JSON.stringify({ name: selectedVoterName, jersey: jerseyName, kelas: "XI.C.2" })
       })
       .then(res => res.json())
       .then(data => {
@@ -394,7 +373,6 @@
         if (data.status === "success") {
           $("#success-overlay").classList.add("active");
         } else {
-          // Jika backend menolak (misal nama sudah pernah vote)
           showToast(data.message || "Gagal menyimpan vote.");
           btnSubmit.disabled = false;
         }
@@ -403,11 +381,9 @@
         $("#loading-overlay").classList.remove("active");
         showToast("Koneksi gagal. Periksa jaringan Anda.");
         btnSubmit.disabled = false;
-        console.error(err);
       });
     });
 
-    // ================= UTILS =================
     function showToast(msg) {
       const toast = $("#toast");
       $("#toast-msg").textContent = msg;
