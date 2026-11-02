@@ -45,29 +45,22 @@
     /* Kartu Kaca */
     .glass-card { width: 100%; max-width: 480px; background: var(--glass-strong); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
     
-    /* ===== LEADERBOARD STYLES (UPDATE DENGAN GAMBAR) ===== */
+    /* ===== LEADERBOARD ===== */
     .leaderboard-card { padding: 24px; margin-bottom: 20px; }
     .leaderboard-card h3 { font-size: 1.1rem; text-align: center; margin-bottom: 20px; color: var(--emerald-bright); display: flex; align-items: center; justify-content: center; gap: 8px; }
-    
     .lb-list { display: flex; flex-direction: column; gap: 16px; }
     .lb-item { display: flex; align-items: center; gap: 12px; }
-    
     .lb-rank { font-size: 1.2rem; width: 24px; text-align: center; font-weight: bold; flex-shrink: 0; }
     .lb-item:nth-child(1) .lb-rank { color: var(--gold); font-size: 1.4rem; }
     .lb-item:nth-child(2) .lb-rank { color: var(--silver); font-size: 1.3rem; }
     .lb-item:nth-child(3) .lb-rank { color: var(--bronze); font-size: 1.2rem; }
-
-    /* Gambar Jersey di Leaderboard */
     .lb-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--glass-border); background: #0f172a; flex-shrink: 0; }
-    
     .lb-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
     .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
     .lb-name { font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lb-votes { font-size: 0.75rem; font-weight: 700; color: var(--emerald-bright); background: rgba(16,185,129,0.15); padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
-    
     .lb-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
     .lb-bar-fill { height: 100%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 10px; transition: width 1s cubic-bezier(0.16, 1, 0.3, 1); }
-    
     .lb-item:nth-child(1) .lb-bar-fill { background: linear-gradient(90deg, #fbbf24, #fcd34d); }
     .lb-item:nth-child(2) .lb-bar-fill { background: linear-gradient(90deg, #94a3b8, #cbd5e1); }
     .lb-item:nth-child(3) .lb-bar-fill { background: linear-gradient(90deg, #b45309, #d97706); }
@@ -75,7 +68,6 @@
     /* Ikon & Typography */
     .icon-wrap { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--emerald-bright); }
     .icon-warning { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.4); color: #fcd34d; }
-    
     h2 { font-size: 1.5rem; text-align: center; margin-bottom: 8px; color: var(--text-main); }
     p.subtitle { text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
 
@@ -121,11 +113,18 @@
     .jersey-card:hover { border-color: var(--text-muted); transform: translateY(-4px); }
     .jersey-card.selected { border-color: var(--emerald); box-shadow: 0 0 0 3px var(--emerald-glow); transform: translateY(-4px); }
     
-    .jersey-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; background: #0f172a; }
-    .jersey-info { padding: 12px; text-align: center; background: rgba(0,0,0,0.5); }
+    .jersey-img-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #0f172a; }
+    .jersey-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+    .jersey-card:hover .jersey-img { transform: scale(1.05); }
+    
+    .jersey-info { padding: 12px; text-align: center; background: rgba(0,0,0,0.5); position: relative; }
     .jersey-title { font-size: 0.95rem; font-weight: 800; color: #ffffff; }
     
-    .badge-check { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: var(--emerald); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; transform: scale(0); transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    /* Tombol Lihat Full di Kartu */
+    .btn-view-full { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.2s; backdrop-filter: blur(4px); z-index: 5; }
+    .btn-view-full:hover { background: var(--emerald); color: black; border-color: var(--emerald); }
+    
+    .badge-check { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: var(--emerald); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; transform: scale(0); transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 5; }
     .jersey-card.selected .badge-check { transform: scale(1); }
 
     /* Header Voting */
@@ -138,7 +137,17 @@
     .submit-bar.show { transform: translateY(0); }
     .submit-bar .btn { max-width: 600px; }
 
-    /* Overlays */
+    /* ===== LIGHTBOX MODAL (FULL IMAGE) ===== */
+    .image-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(8px); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
+    .image-modal.active { display: flex; opacity: 1; }
+    
+    .modal-img-container { width: 100%; max-width: 800px; max-height: 80vh; display: flex; align-items: center; justify-content: center; position: relative; }
+    .modal-img-container img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+    
+    .btn-back-modal { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 100px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); transition: 0.2s; z-index: 5010; }
+    .btn-back-modal:hover { background: var(--danger); border-color: var(--danger); }
+
+    /* Overlays (Loading/Success) */
     .overlay { position: fixed; inset: 0; background: rgba(6,11,24,0.95); backdrop-filter: blur(10px); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
     .overlay.active { display: flex; }
     .spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--emerald); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
@@ -146,7 +155,7 @@
     .overlay h3 { color: white; font-size: 1.3rem; }
 
     /* Toast */
-    .toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--danger); color: white; padding: 14px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; box-shadow: 0 10px 30px rgba(244,63,94,0.5); z-index: 3000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3); display: flex; align-items: center; gap: 10px; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--danger); color: white; padding: 14px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 700; box-shadow: 0 10px 30px rgba(244,63,94,0.5); z-index: 6000; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3); display: flex; align-items: center; gap: 10px; }
     .toast.show { transform: translate(-50%, 0); }
 
     @media (max-width: 600px) {
@@ -157,6 +166,7 @@
       .rules-list li { font-size: 0.95rem; }
       .lb-header { font-size: 0.8rem; }
       .lb-img { width: 42px; height: 42px; }
+      .btn-back-modal { top: 15px; left: 15px; padding: 8px 16px; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -164,10 +174,18 @@
 
   <div class="ambient"></div>
 
+  <!-- ================= LIGHTBOX MODAL (GAMBAR FULL) ================= -->
+  <div class="image-modal" id="image-modal">
+    <button class="btn-back-modal" onclick="closeFullImage()">
+      <i class="fa-solid fa-arrow-left"></i> Kembali
+    </button>
+    <div class="modal-img-container">
+      <img id="full-image" src="" alt="Full Jersey">
+    </div>
+  </div>
+
   <!-- ================= TAHAP 1: PASSWORD & LEADERBOARD ================= -->
-  <div class="screen active" id="screen-password">
-    
-    <!-- 🏆 LEADERBOARD TOP 5 -->
+  <div class="screen" id="screen-password">
     <div class="glass-card leaderboard-card">
       <h3><i class="fa-solid fa-trophy"></i> Top 5 Jersey Terpopuler</h3>
       <div class="lb-list" id="leaderboard-list">
@@ -177,7 +195,6 @@
       </div>
     </div>
 
-    <!-- FORM PASSWORD -->
     <div class="glass-card">
       <div class="icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
       <h2>Akses Terbatas</h2>
@@ -223,7 +240,6 @@
         <label for="name-select">Daftar Nama Siswa XI.C.2</label>
         <select id="name-select">
           <option value="" disabled selected>-- Pilih Nama Anda --</option>
-          <!-- Opsi diisi JS -->
         </select>
       </div>
 
@@ -270,10 +286,9 @@
   <div class="toast" id="toast"><i class="fa-solid fa-circle-exclamation"></i> <span id="toast-msg"></span></div>
 
   <script>
-    // KONFIGURASI API
+    // KONFIGURASI
     const API_URL = "https://script.google.com/macros/s/AKfycbwIfFzDkBAQA75LN1EF3S7kAPH6IEHuSQXHgcMGaeXHazgJ3hCp2RG5jHCe34znYeeAig/exec";
     
-    // DAFTAR NAMA SISWA
     const STUDENT_NAMES = [
       "ABIYYU TSAQIB", "ACHMAD RIBERY ALHAKIM", "AFIFA ZIAULIMA AZMI", "AIRA PURNAMA SYACHPUTRI", 
       "ALFIAN NENDIE DJUANTORO", "ALISA AZ ZIKRA", "ALMAIRA DAMAI YANTI", "ALMIRA DINEFI APRILIANI", 
@@ -290,12 +305,12 @@
       "WINDA SYAFINA JASMINE"
     ];
 
-    // GAMBAR (Absolute URL GitHub Raw)
     const GITHUB_USER = "xdfaaateam-tech";
     const GITHUB_REPO = "Jersey-";
     const GITHUB_BRANCH = "main";
     const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
 
+    // DAFTAR JERSEY (Total 19 Desain)
     const JERSEYS = [
       { id: "j01", name: "Jersey Opsi 01", img: BASE_URL + "IMG-20260717-WA0016.jpg" },
       { id: "j02", name: "Jersey Opsi 02", img: BASE_URL + "IMG-20260717-WA0034.jpg" },
@@ -308,7 +323,15 @@
       { id: "j09", name: "Jersey Opsi 09", img: BASE_URL + "IMG-20261013-WA0019.jpg" },
       { id: "j10", name: "Jersey Opsi 10", img: BASE_URL + "IMG-20261013-WA0020.jpg" },
       { id: "j11", name: "Jersey Opsi 11", img: BASE_URL + "IMG-20261013-WA0021.jpg" },
-      { id: "j12", name: "Jersey Opsi 12", img: BASE_URL + "IMG-20261013-WA0023.jpg" }
+      { id: "j12", name: "Jersey Opsi 12", img: BASE_URL + "IMG-20261013-WA0023.jpg" },
+      // 7 Desain Baru ditambahkan di sini
+      { id: "j13", name: "Jersey Opsi 13", img: BASE_URL + "IMG-20261102-WA0031.jpg" },
+      { id: "j14", name: "Jersey Opsi 14", img: BASE_URL + "IMG-20261102-WA0030.jpg" },
+      { id: "j15", name: "Jersey Opsi 15", img: BASE_URL + "IMG-20261102-WA0029.jpg" },
+      { id: "j16", name: "Jersey Opsi 16", img: BASE_URL + "IMG-20261102-WA0028.jpg" },
+      { id: "j17", name: "Jersey Opsi 17", img: BASE_URL + "IMG-20261102-WA0027.jpg" },
+      { id: "j18", name: "Jersey Opsi 18", img: BASE_URL + "IMG-20261102-WA0026.jpg" },
+      { id: "j19", name: "Jersey Opsi 19", img: BASE_URL + "IMG-20261102-WA0025.jpg" }
     ];
 
     let selectedJerseyId = null;
@@ -318,60 +341,95 @@
     const $$ = (s) => document.querySelectorAll(s);
     const screens = { pass: $("#screen-password"), rules: $("#screen-rules"), identity: $("#screen-identity"), voting: $("#screen-voting") };
 
+    // ================= STATE MANAGEMENT (SESSION STORAGE) =================
+    function saveState(screenId) {
+      sessionStorage.setItem('votingScreen', screenId);
+      if (selectedVoterName) sessionStorage.setItem('voterName', selectedVoterName);
+      if (selectedJerseyId) sessionStorage.setItem('selectedJersey', selectedJerseyId);
+    }
+
+    function clearState() {
+      sessionStorage.removeItem('votingScreen');
+      sessionStorage.removeItem('voterName');
+      sessionStorage.removeItem('selectedJersey');
+    }
+
+    function restoreState() {
+      const savedScreen = sessionStorage.getItem('votingScreen');
+      const savedName = sessionStorage.getItem('voterName');
+      const savedJersey = sessionStorage.getItem('selectedJersey');
+
+      if (savedScreen) {
+        if (savedName) {
+          selectedVoterName = savedName;
+          $("#display-name").textContent = savedName;
+          
+          const nameSelect = $("#name-select");
+          if([...nameSelect.options].some(o => o.value === savedName)) {
+            nameSelect.value = savedName;
+            $("#confirm-check").checked = true;
+            $("#btn-continue").disabled = false;
+          }
+        }
+
+        showScreen(savedScreen);
+
+        if (savedScreen === 'voting') {
+          renderJerseys();
+          if (savedJersey) {
+            selectedJerseyId = savedJersey;
+            const card = document.querySelector(`.jersey-card[data-id="${savedJersey}"]`);
+            if (card) {
+              card.classList.add("selected");
+              $("#submit-bar").classList.add("show");
+              $("#btn-submit").disabled = false;
+            }
+          }
+        }
+      }
+    }
+
     function showScreen(screenId) {
       Object.values(screens).forEach(s => s.classList.remove("active"));
       screens[screenId].classList.add("active");
       window.scrollTo(0, 0);
+      saveState(screenId);
     }
 
-    // ================= FITUR LEADERBOARD (TOP 5) =================
+    // ================= LEADERBOARD =================
     async function loadLeaderboard() {
       const listEl = $("#leaderboard-list");
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
-        
         if (json.status !== "success") throw new Error("Gagal memuat data");
 
-        const data = json.data; // Array of rows
+        const data = json.data;
         const voteCounts = {};
-        
-        // Inisialisasi semua jersey dengan 0 vote
         JERSEYS.forEach(j => voteCounts[j.name] = 0);
 
-        // Hitung suara (lewati baris pertama/header)
         if (data && data.length > 1) {
           const rows = data.slice(1);
           rows.forEach(row => {
-            const chosenJersey = row[2]; // Kolom ke-3 adalah nama jersey
-            if (voteCounts[chosenJersey] !== undefined) {
-              voteCounts[chosenJersey]++;
-            }
+            const chosenJersey = row[2];
+            if (voteCounts[chosenJersey] !== undefined) voteCounts[chosenJersey]++;
           });
         }
 
-        // Urutkan dari yang terbanyak, ambil 5 teratas, filter yang > 0
-        const sorted = Object.entries(voteCounts)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 5)
-          .filter(item => item[1] > 0); // Hanya tampilkan jika ada suara
+        const sorted = Object.entries(voteCounts).sort((a, b) => b[1] - a[1]).slice(0, 5).filter(item => item[1] > 0);
 
         if (sorted.length === 0) {
           listEl.innerHTML = '<p style="text-align:center; font-size:0.85rem; color:var(--text-muted);">Belum ada suara yang masuk.</p>';
           return;
         }
 
-        const maxVotes = sorted[0][1]; // Untuk menghitung persentase panjang bar
-
+        const maxVotes = sorted[0][1];
         listEl.innerHTML = sorted.map((item, index) => {
           const [name, votes] = item;
           const percent = (votes / maxVotes) * 100;
-          
-          // Ambil URL gambar dari data JERSEYS berdasarkan nama
           const jerseyObj = JERSEYS.find(j => j.name === name);
           const imgUrl = jerseyObj ? jerseyObj.img : 'https://placehold.co/100x100/1e293b/ffffff?text=?';
-
-          // Tentukan Ikon Peringkat
+          
           let rankIcon = `<span>#${index + 1}</span>`;
           if (index === 0) rankIcon = "🥇";
           else if (index === 1) rankIcon = "🥈";
@@ -393,16 +451,21 @@
             </div>
           `;
         }).join("");
-
       } catch (err) {
         listEl.innerHTML = '<p style="text-align:center; font-size:0.85rem; color:var(--danger);">Gagal memuat peringkat.</p>';
-        console.error(err);
       }
     }
 
-    // Panggil fungsi leaderboard saat halaman dimuat
-    document.addEventListener("DOMContentLoaded", loadLeaderboard);
+    // ================= FITUR FULL IMAGE =================
+    function openFullImage(src) {
+      $("#full-image").src = src;
+      $("#image-modal").classList.add("active");
+    }
 
+    function closeFullImage() {
+      $("#image-modal").classList.remove("active");
+      setTimeout(() => { $("#full-image").src = ""; }, 300);
+    }
 
     // ================= TAHAP 1: PASSWORD =================
     const passInput = $("#pass-input");
@@ -449,6 +512,7 @@
       $("#display-name").textContent = selectedVoterName;
       showScreen("voting");
       renderJerseys();
+      saveState("voting");
     });
 
     // ================= TAHAP 4: VOTING =================
@@ -464,11 +528,16 @@
         card.dataset.id = jersey.id;
         
         card.innerHTML = `
-          <img src="${jersey.img}" alt="${jersey.name}" class="jersey-img" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Gagal+Dimuat'">
+          <div class="jersey-img-wrapper">
+            <img src="${jersey.img}" alt="${jersey.name}" class="jersey-img" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Gagal+Dimuat'">
+            <button class="btn-view-full" onclick="event.stopPropagation(); openFullImage('${jersey.img}')">
+              <i class="fa-solid fa-expand"></i> Lihat
+            </button>
+            <div class="badge-check"><i class="fa-solid fa-check"></i></div>
+          </div>
           <div class="jersey-info">
             <span class="jersey-title">${jersey.name}</span>
           </div>
-          <div class="badge-check"><i class="fa-solid fa-check"></i></div>
         `;
 
         card.addEventListener("click", () => selectJersey(jersey.id, card));
@@ -482,6 +551,7 @@
       selectedJerseyId = id;
       submitBar.classList.add("show");
       btnSubmit.disabled = false;
+      saveState("voting");
     }
 
     btnSubmit.addEventListener("click", () => {
@@ -500,6 +570,7 @@
       .then(data => {
         $("#loading-overlay").classList.remove("active");
         if (data.status === "success") {
+          clearState();
           $("#success-overlay").classList.add("active");
         } else {
           showToast(data.message || "Gagal menyimpan vote.");
@@ -519,6 +590,12 @@
       toast.classList.add("show");
       setTimeout(() => toast.classList.remove("show"), 4000);
     }
+
+    // ================= INIT =================
+    document.addEventListener("DOMContentLoaded", () => {
+      loadLeaderboard();
+      restoreState();
+    });
   </script>
 </body>
 </html>
