@@ -11,7 +11,7 @@
     :root {
       --bg-deep: #060b18;
       --glass: rgba(15, 23, 42, 0.6);
-      --glass-strong: rgba(15, 23, 42, 0.95);
+      --glass-strong: #0f172a; /* Warna solid agar dijamin muncul */
       --glass-border: rgba(148, 163, 184, 0.3);
       --emerald: #10b981;
       --emerald-bright: #34d399;
@@ -185,7 +185,7 @@
   </div>
 
   <!-- ================= TAHAP 1: PASSWORD & LEADERBOARD ================= -->
-  <div class="screen" id="screen-password">
+  <div class="screen active" id="screen-password">
     <div class="glass-card leaderboard-card">
       <h3><i class="fa-solid fa-trophy"></i> Top 5 Jersey Terpopuler</h3>
       <div class="lb-list" id="leaderboard-list">
@@ -324,7 +324,6 @@
       { id: "j10", name: "Jersey Opsi 10", img: BASE_URL + "IMG-20261013-WA0020.jpg" },
       { id: "j11", name: "Jersey Opsi 11", img: BASE_URL + "IMG-20261013-WA0021.jpg" },
       { id: "j12", name: "Jersey Opsi 12", img: BASE_URL + "IMG-20261013-WA0023.jpg" },
-      // 7 Desain Baru ditambahkan di sini
       { id: "j13", name: "Jersey Opsi 13", img: BASE_URL + "IMG-20261102-WA0031.jpg" },
       { id: "j14", name: "Jersey Opsi 14", img: BASE_URL + "IMG-20261102-WA0030.jpg" },
       { id: "j15", name: "Jersey Opsi 15", img: BASE_URL + "IMG-20261102-WA0029.jpg" },
@@ -341,55 +340,63 @@
     const $$ = (s) => document.querySelectorAll(s);
     const screens = { pass: $("#screen-password"), rules: $("#screen-rules"), identity: $("#screen-identity"), voting: $("#screen-voting") };
 
-    // ================= STATE MANAGEMENT (SESSION STORAGE) =================
+    // ================= STATE MANAGEMENT (SAFE VERSION) =================
     function saveState(screenId) {
-      sessionStorage.setItem('votingScreen', screenId);
-      if (selectedVoterName) sessionStorage.setItem('voterName', selectedVoterName);
-      if (selectedJerseyId) sessionStorage.setItem('selectedJersey', selectedJerseyId);
+      try {
+        sessionStorage.setItem('votingScreen', screenId);
+        if (selectedVoterName) sessionStorage.setItem('voterName', selectedVoterName);
+        if (selectedJerseyId) sessionStorage.setItem('selectedJersey', selectedJerseyId);
+      } catch(e) { console.warn("Session storage not available"); }
     }
 
     function clearState() {
-      sessionStorage.removeItem('votingScreen');
-      sessionStorage.removeItem('voterName');
-      sessionStorage.removeItem('selectedJersey');
+      try {
+        sessionStorage.removeItem('votingScreen');
+        sessionStorage.removeItem('voterName');
+        sessionStorage.removeItem('selectedJersey');
+      } catch(e) { console.warn("Session storage not available"); }
     }
 
     function restoreState() {
-      const savedScreen = sessionStorage.getItem('votingScreen');
-      const savedName = sessionStorage.getItem('voterName');
-      const savedJersey = sessionStorage.getItem('selectedJersey');
+      try {
+        const savedScreen = sessionStorage.getItem('votingScreen');
+        const savedName = sessionStorage.getItem('voterName');
+        const savedJersey = sessionStorage.getItem('selectedJersey');
 
-      if (savedScreen) {
-        if (savedName) {
-          selectedVoterName = savedName;
-          $("#display-name").textContent = savedName;
-          
-          const nameSelect = $("#name-select");
-          if([...nameSelect.options].some(o => o.value === savedName)) {
-            nameSelect.value = savedName;
-            $("#confirm-check").checked = true;
-            $("#btn-continue").disabled = false;
+        // Pastikan savedScreen adalah ID yang valid
+        if (savedScreen && screens[savedScreen]) {
+          if (savedName) {
+            selectedVoterName = savedName;
+            $("#display-name").textContent = savedName;
+            
+            const nameSelect = $("#name-select");
+            if([...nameSelect.options].some(o => o.value === savedName)) {
+              nameSelect.value = savedName;
+              $("#confirm-check").checked = true;
+              $("#btn-continue").disabled = false;
+            }
           }
-        }
 
-        showScreen(savedScreen);
+          showScreen(savedScreen);
 
-        if (savedScreen === 'voting') {
-          renderJerseys();
-          if (savedJersey) {
-            selectedJerseyId = savedJersey;
-            const card = document.querySelector(`.jersey-card[data-id="${savedJersey}"]`);
-            if (card) {
-              card.classList.add("selected");
-              $("#submit-bar").classList.add("show");
-              $("#btn-submit").disabled = false;
+          if (savedScreen === 'voting') {
+            renderJerseys();
+            if (savedJersey) {
+              selectedJerseyId = savedJersey;
+              const card = document.querySelector(`.jersey-card[data-id="${savedJersey}"]`);
+              if (card) {
+                card.classList.add("selected");
+                $("#submit-bar").classList.add("show");
+                $("#btn-submit").disabled = false;
+              }
             }
           }
         }
-      }
+      } catch(e) { console.warn("Failed to restore state"); }
     }
 
     function showScreen(screenId) {
+      if (!screens[screenId]) return; // Cegah error jika ID tidak valid
       Object.values(screens).forEach(s => s.classList.remove("active"));
       screens[screenId].classList.add("active");
       window.scrollTo(0, 0);
@@ -594,7 +601,8 @@
     // ================= INIT =================
     document.addEventListener("DOMContentLoaded", () => {
       loadLeaderboard();
-      restoreState();
+      // Beri jeda sedikit sebelum restoreState agar HTML siap
+      setTimeout(restoreState, 100); 
     });
   </script>
 </body>
